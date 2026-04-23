@@ -13,4 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Команда для запуска (убедись, что main:app соответствует твоему коду)
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "10000"]
+
+# Вместо жесткого "10000" пишем использование переменной окружения
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT
