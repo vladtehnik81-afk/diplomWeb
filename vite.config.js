@@ -1,6 +1,8 @@
+// vite.config.js
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react' // Изменили импорт здесь
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/diplomWeb/', // Обязательно добавь эту строку
 })
