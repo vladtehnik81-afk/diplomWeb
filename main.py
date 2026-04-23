@@ -14,27 +14,23 @@ import os
 from sqlalchemy import create_engine
 from db.database import get_db, engine
 from db.models import Base, University, Score, User, Favorite
-DATABASE_URL = os.getenv("DATABASE_URL")
-# Создаём таблицы при старте
-Base.metadata.create_all(bind=engine)
-from fastapi.middleware.cors import CORSMiddleware
 
-app = CORSMiddleware(
-    app,
-    allow_origins=["https://твое-приложение.vercel.app"], # Укажи здесь точный адрес твоего фронтенда
+# 1. Сначала создаем экземпляр FastAPI
+app = FastAPI(title="ЕГЭ Поступление API", version="1.0.0")
+
+# 2. Настраиваем CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Если нужно ограничить: ["https://твое-приложение.vercel.app"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app = FastAPI(title="ЕГЭ Поступление API", version="1.0.0")
 
-# CORS — разрешаем запросы с фронтенда
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# 3. Настройка базы данных
+DATABASE_URL = os.getenv("DATABASE_URL")
+# Создаём таблицы при старте
+Base.metadata.create_all(bind=engine)
 
 SECRET_KEY = "ege_diplom_secret_2025"
 security   = HTTPBearer(auto_error=False)
