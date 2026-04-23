@@ -10,10 +10,11 @@ import hmac
 import time
 import json
 import base64
-
+import os
+from sqlalchemy import create_engine
 from db.database import get_db, engine
 from db.models import Base, University, Score, User, Favorite
-
+DATABASE_URL = os.getenv("DATABASE_URL")
 # Создаём таблицы при старте
 Base.metadata.create_all(bind=engine)
 
