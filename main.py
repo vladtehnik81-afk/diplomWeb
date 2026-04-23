@@ -17,7 +17,15 @@ from db.models import Base, University, Score, User, Favorite
 DATABASE_URL = os.getenv("DATABASE_URL")
 # Создаём таблицы при старте
 Base.metadata.create_all(bind=engine)
+from fastapi.middleware.cors import CORSMiddleware
 
+app = CORSMiddleware(
+    app,
+    allow_origins=["https://твое-приложение.vercel.app"], # Укажи здесь точный адрес твоего фронтенда
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app = FastAPI(title="ЕГЭ Поступление API", version="1.0.0")
 
 # CORS — разрешаем запросы с фронтенда
